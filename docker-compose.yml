@@ -1,0 +1,68 @@
+name: carelink-followup
+
+x-db-env: &db-env
+  DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-carelink}:${POSTGRES_PASSWORD:-carelink_dev_only}@db:5432/${POSTGRES_DB:-carelink}}
+  TEST_DATABASE_URL: ${TEST_DATABASE_URL:-postgresql://${POSTGRES_USER:-carelink}:${POSTGRES_PASSWORD:-carelink_dev_only}@db:5432/carelink_test}
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-carelink}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-carelink_dev_only}
+      POSTGRES_DB: ${POSTGRES_DB:-carelink}
+    ports:
+      - "127.0.0.1:${DB_HOST_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build: ./api
+    env_file: .env
+    environment:
+      <<: *db-env
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  web:
+    build:
+      context: ./web
+      target: runtime
+    ports:
+      - "127.0.0.1:5173:80"
+    depends_on:
+      - api
+
+  # Test runners (make test-api / make test-web); not started by `make up`.
+  api-test:
+    build: ./api
+    profiles: ["test"]
+    env_file: .env
+    environment:
+      <<: *db-env
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["pytest"]
+
+  web-test:
+    build:
+      context: ./web
+      target: test
+    profiles: ["test"]
+
+volumes:
+  pgdata:

@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 790" width="1340" height="790" font-family="-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>CareLink Follow-Up: components and communication</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #475569; stroke-width: 1.4; }
+      .box-key { fill: #ffffff; stroke: #0b5c6b; stroke-width: 2; }
+      .store { fill: #f1f5f9; stroke: #475569; stroke-width: 1.4; }
+      .ext { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 5 3; }
+      .flow { fill: none; stroke: #334155; stroke-width: 1.6; }
+      .telemetry { fill: none; stroke: #64748b; stroke-width: 1.4; stroke-dasharray: 6 4; }
+      .h { font-size: 15px; font-weight: 700; fill: #0f172a; }
+      .t { font-size: 12.5px; fill: #334155; }
+      .s { font-size: 11.5px; fill: #64748b; }
+      .lbl { font-size: 11.5px; fill: #1e293b; font-weight: 600; }
+      .lbl-muted { font-size: 11.5px; fill: #64748b; font-style: italic; }
+      .grp { font-size: 12px; font-weight: 800; letter-spacing: 0.08em; }
+      .grp-sub { font-size: 12px; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect width="1340" height="790" fill="#ffffff"/>
+
+  <!-- ===== Groups ===== -->
+  <rect x="20" y="130" width="330" height="600" rx="14" fill="#e8f3f5" stroke="#0b5c6b" stroke-width="1.5"/>
+  <text x="40" y="158" class="grp" fill="#0b5c6b">FACILITY SITE</text>
+  <text x="40" y="176" class="grp-sub">~1,100 clinics with a node · works offline</text>
+
+  <rect x="470" y="130" width="660" height="600" rx="14" fill="#eef2f8" stroke="#3b5b8c" stroke-width="1.5"/>
+  <text x="490" y="158" class="grp" fill="#3b5b8c">NATIONAL PLATFORM</text>
+  <text x="490" y="176" class="grp-sub">In-country data centre · also hosts ~400 connected clinics</text>
+
+  <!-- ===== Facility site ===== -->
+  <rect x="50" y="195" width="270" height="80" rx="9" class="box"/>
+  <text x="185" y="224" text-anchor="middle" class="h">Browser · React PWA</text>
+  <text x="185" y="244" text-anchor="middle" class="t">App shell cached by service worker</text>
+  <text x="185" y="262" text-anchor="middle" class="s">small encrypted outbox</text>
+
+  <rect x="50" y="340" width="270" height="100" rx="9" class="box-key"/>
+  <text x="185" y="370" text-anchor="middle" class="h">Facility node</text>
+  <text x="185" y="391" text-anchor="middle" class="t">FastAPI modular monolith</text>
+  <text x="185" y="411" text-anchor="middle" class="s">patients · visits · follow-up · sync</text>
+  <text x="185" y="428" text-anchor="middle" class="s">Docker Compose on existing hardware</text>
+
+  <!-- facility PostgreSQL (cylinder) -->
+  <path d="M85,532 v88 a100,12 0 0 0 200,0 v-88" class="store"/>
+  <ellipse cx="185" cy="532" rx="100" ry="12" class="store"/>
+  <text x="185" y="578" text-anchor="middle" class="h">PostgreSQL</text>
+  <text x="185" y="598" text-anchor="middle" class="t">facility data + sync outbox</text>
+
+  <text x="185" y="672" text-anchor="middle" class="s">Follow-up list is computed here,</text>
+  <text x="185" y="688" text-anchor="middle" class="s">so losing the internet never stops clinic work</text>
+
+  <!-- facility flows -->
+  <line x1="185" y1="275" x2="185" y2="336" class="flow" marker-end="url(#arrow)"/>
+  <text x="195" y="304" class="lbl">HTTPS REST</text>
+  <text x="195" y="319" class="s">over the clinic LAN</text>
+  <line x1="185" y1="440" x2="185" y2="516" class="flow" marker-end="url(#arrow)"/>
+  <text x="195" y="482" class="s">SQL</text>
+
+  <!-- ===== Connected users ===== -->
+  <rect x="470" y="22" width="320" height="64" rx="9" class="box"/>
+  <text x="630" y="48" text-anchor="middle" class="h">Browser · connected users</text>
+  <text x="630" y="68" text-anchor="middle" class="t">connected clinic, district or national office</text>
+
+  <!-- ===== National platform ===== -->
+  <rect x="500" y="345" width="130" height="90" rx="9" class="box"/>
+  <text x="565" y="384" text-anchor="middle" class="h">Gateway</text>
+  <text x="565" y="404" text-anchor="middle" class="t">TLS · routing</text>
+
+  <rect x="690" y="190" width="200" height="90" rx="9" class="box-key"/>
+  <text x="790" y="220" text-anchor="middle" class="h">National API</text>
+  <text x="790" y="240" text-anchor="middle" class="t">same codebase, national mode</text>
+  <text x="790" y="258" text-anchor="middle" class="s">+ virtual facility instances</text>
+
+  <rect x="940" y="190" width="160" height="90" rx="9" class="box"/>
+  <text x="1020" y="228" text-anchor="middle" class="h">Keycloak</text>
+  <text x="1020" y="248" text-anchor="middle" class="t">OIDC · roles &amp; scope</text>
+
+  <rect x="690" y="330" width="170" height="90" rx="9" class="box-key"/>
+  <text x="775" y="362" text-anchor="middle" class="h">Sync service</text>
+  <text x="775" y="382" text-anchor="middle" class="t">push / pull</text>
+  <text x="775" y="400" text-anchor="middle" class="s">idempotency · conflicts</text>
+
+  <rect x="940" y="330" width="160" height="90" rx="9" class="box"/>
+  <text x="1020" y="366" text-anchor="middle" class="h">Monitoring</text>
+  <text x="1020" y="386" text-anchor="middle" class="t">Prometheus · Grafana</text>
+  <text x="1020" y="403" text-anchor="middle" class="t">Loki</text>
+
+  <!-- national PostgreSQL (cylinder) -->
+  <path d="M690,482 v90 a100,12 0 0 0 200,0 v-90" class="store"/>
+  <ellipse cx="790" cy="482" rx="100" ry="12" class="store"/>
+  <text x="790" y="528" text-anchor="middle" class="h">PostgreSQL</text>
+  <text x="790" y="548" text-anchor="middle" class="t">primary + replica</text>
+
+  <rect x="690" y="620" width="200" height="80" rx="9" class="box"/>
+  <text x="790" y="654" text-anchor="middle" class="h">Integration workers</text>
+  <text x="790" y="674" text-anchor="middle" class="t">read the Postgres outbox</text>
+
+  <!-- ===== External systems ===== -->
+  <rect x="1170" y="560" width="150" height="70" rx="9" class="ext"/>
+  <text x="1245" y="591" text-anchor="middle" class="h">Laboratory</text>
+  <text x="1245" y="610" text-anchor="middle" class="t">system</text>
+
+  <rect x="1170" y="650" width="150" height="70" rx="9" class="ext"/>
+  <text x="1245" y="681" text-anchor="middle" class="h">Reporting</text>
+  <text x="1245" y="700" text-anchor="middle" class="t">platform</text>
+
+  <!-- ===== Flows ===== -->
+  <!-- connected browser -> gateway -->
+  <line x1="565" y1="86" x2="565" y2="341" class="flow" marker-end="url(#arrow)"/>
+  <text x="575" y="208" class="lbl">HTTPS</text>
+
+  <!-- facility node -> gateway (sync API) -->
+  <line x1="320" y1="390" x2="496" y2="390" class="flow" marker-end="url(#arrow)"/>
+  <text x="410" y="414" text-anchor="middle" class="lbl">Sync API</text>
+  <text x="410" y="430" text-anchor="middle" class="s">batched · idempotent</text>
+  <text x="410" y="445" text-anchor="middle" class="s">resumable</text>
+
+  <!-- gateway -> API and sync service -->
+  <polyline points="630,390 660,390 660,235 686,235" class="flow" marker-end="url(#arrow)"/>
+  <polyline points="660,375 686,375" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- API -> Keycloak -->
+  <line x1="890" y1="235" x2="936" y2="235" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- API -> PostgreSQL, Sync -> PostgreSQL -->
+  <line x1="878" y1="280" x2="878" y2="475" class="flow" marker-end="url(#arrow)"/>
+  <line x1="775" y1="420" x2="775" y2="468" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- PostgreSQL -> integration workers -->
+  <line x1="790" y1="585" x2="790" y2="616" class="flow" marker-end="url(#arrow)"/>
+  <text x="800" y="606" class="s">outbox rows</text>
+
+  <!-- workers <-> laboratory -->
+  <polyline points="890,645 1145,645 1145,595 1166,595" class="flow" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="1010" y="637" text-anchor="middle" class="lbl">FHIR R4 / HL7 v2</text>
+
+  <!-- workers -> reporting -->
+  <line x1="894" y1="685" x2="1166" y2="685" class="flow" marker-end="url(#arrow)"/>
+  <text x="1010" y="677" text-anchor="middle" class="lbl">nightly aggregates</text>
+  <text x="1010" y="701" text-anchor="middle" class="s">no patient-level data</text>
+
+  <!-- telemetry: facility node -> monitoring -->
+  <polyline points="320,360 445,360 445,108 1150,108 1150,375 1104,375" class="telemetry" marker-end="url(#arrow-muted)"/>
+  <text x="900" y="101" text-anchor="middle" class="lbl-muted">heartbeat + metrics from every node</text>
+
+  <!-- telemetry: national API -> monitoring -->
+  <polyline points="890,262 915,262 915,375 936,375" class="telemetry" marker-end="url(#arrow-muted)"/>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(20,752)">
+    <line x1="0" y1="8" x2="36" y2="8" class="flow" marker-end="url(#arrow)"/>
+    <text x="46" y="12" class="t">request / data flow</text>
+    <line x1="190" y1="8" x2="226" y2="8" class="telemetry" marker-end="url(#arrow-muted)"/>
+    <text x="236" y="12" class="t">telemetry</text>
+    <rect x="330" y="0" width="22" height="16" rx="4" class="box-key"/>
+    <text x="360" y="12" class="t">Follow-Up code (one codebase)</text>
+    <rect x="570" y="0" width="22" height="16" rx="4" class="ext"/>
+    <text x="600" y="12" class="t">external system</text>
+    <text x="1296" y="12" text-anchor="end" class="s">Between tiers the only path is the sync API. Every write carries an Idempotency-Key.</text>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+.env
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.DS_Store
+coverage/
+
+# Assessment brief (not part of the submission)
+CIDRZ Technical Assessment - Candidate Pack.pdf

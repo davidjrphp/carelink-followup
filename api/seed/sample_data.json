@@ -1,0 +1,22 @@
+{
+  "_comment": "Starter data from the candidate pack, section 15.4. All invented.",
+  "facilities": [
+    { "facility_id": "FAC-0101", "name": "Mwansa Urban Clinic", "district": "Mwansa" },
+    { "facility_id": "FAC-0207", "name": "Kalemba Rural Health Centre", "district": "Kalemba" },
+    { "facility_id": "FAC-0312", "name": "Chembe District Hospital", "district": "Chembe" }
+  ],
+  "patients": [
+    { "facility_id": "FAC-0101", "patient_number": "0101-000471", "first_name": "Thandiwe", "last_name": "Banda", "date_of_birth": "1991-03-14", "sex": "female", "phone_number": "+260970000471" },
+    { "facility_id": "FAC-0101", "patient_number": "0101-000472", "first_name": "Mulenga", "last_name": "Phiri", "date_of_birth": "1978-11-02", "sex": "male", "phone_number": null },
+    { "facility_id": "FAC-0207", "patient_number": "0207-000018", "first_name": "Chipo", "last_name": "Zulu", "date_of_birth": "2015-07-23", "sex": "female", "phone_number": "+260960000018" }
+  ],
+  "visits": [
+    { "patient_number": "0101-000471", "visit_date": "2026-07-02", "next_appointment_date": "2026-08-02", "visit_type": "routine" },
+    { "patient_number": "0101-000471", "visit_date": "2026-08-05", "next_appointment_date": "2026-09-05", "visit_type": "follow_up" },
+    { "patient_number": "0101-000472", "visit_date": "2026-08-20", "next_appointment_date": "2026-09-10", "visit_type": "routine" },
+    { "patient_number": "0207-000018", "visit_date": "2026-09-28", "next_appointment_date": null, "visit_type": "unscheduled" }
+  ],
+  "contact_attempts": [
+    { "patient_number": "0101-000472", "contacted_at": "2026-09-29T09:14:00Z", "note": "No answer; will try again", "recorded_by": "seed" }
+  ]
+}
